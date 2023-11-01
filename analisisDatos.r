@@ -17,9 +17,9 @@ ggplot(datos, aes(x = "", fill = GÉNERO)) +
   labs(title = "Distribución de género") +
   theme_void()
 
-
+# Unificar "estrato 2" con "ESTRATO 2"
+datos |> 
+  mutate(ESTRATO = replace(ESTRATO, which(ESTRATO == "Estrato 2"), "ESTRATO 2")) -> datos
 
 
 victimas_data <- datos[datos$'VICTIMA DEL CONFLICTO ARMADO' == 1, ]
-
-
