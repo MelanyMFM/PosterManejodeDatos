@@ -19,12 +19,7 @@ ggplot(datos, aes(x = "", fill = GÉNERO)) +
 
 
 
-# Filtrar los datos para las personas que fueron víctimas del conflicto armado (VICTIMA_CONFLICTO = "SI")
-victimas_data <- datos %>%
-  filter('VICTIMA DEL CONLFICTO ARMADO' == 1)
 
-# Crear un gráfico de barras apiladas para mostrar la relación entre el municipio de nacimiento y el género de las víctimas
-ggplot(victimas_data, aes(x = MUNICIPIO_DE_NACIMIENTO, fill = GENERO)) +
-  geom_bar() +
-  labs(title = "Municipio de Nacimiento y Género de Víctimas del Conflicto Armado") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+victimas_data <- datos[datos$'VICTIMA DEL CONFLICTO ARMADO' == 1, ]
+
+
