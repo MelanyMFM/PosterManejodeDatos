@@ -33,6 +33,15 @@ ggplot(datos, aes(x = "", fill = GÉNERO)) +
   labs(title = "Distribución de género") +
   theme_void()
 
+# Tipo de formación por género
+ggplot(datos, aes(x = `TIPO DE FORMACIÓN`, fill = GÉNERO)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Tipo de Formación", y = "", fill = "Género") +
+  ggtitle("Tipo de formación por género") +
+  theme_minimal()
+
+
+
 # Distribución estrato
 ggplot(datos, aes(x = "", fill = ESTRATO)) +
   geom_bar(width = 1) +
@@ -47,11 +56,11 @@ ggplot(victimas_data, aes(x = "", fill = ESTRATO)) +
   coord_polar(theta = "y") +
   labs(title = "Estrato de las victimas del conflicto armado") +
   theme_void()
+# Grupo etnico de las victimas del conflicto armado
 ggplot(victimas_data, aes(x = "", fill = `GRUPO ETNICO`)) +
   geom_bar(width = 1) +
   coord_polar(theta = "y") +
   labs(title = "Grupo etnico de las victimas del conflicto armado") +
   theme_void()
 
-beneficio <- data %>%
-  count(ESTRATO, `BENEFICIO OTORGADO`)
+
