@@ -63,4 +63,13 @@ ggplot(victimas_data, aes(x = "", fill = `GRUPO ETNICO`)) +
   labs(title = "Grupo etnico de las victimas del conflicto armado") +
   theme_void()
 
+# Tipo de beneficio por estrato
+ggplot(datos, aes(x = `BENEFICIO OTORGADO`, fill = ESTRATO)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Beneficio Otorgado", y = "", fill = "Estrato") +
+  ggtitle("Tipo de Beneficio por Estrato") +
+  theme_minimal()
 
+#Tabla para ver mas detalladamente los estrato 4, estrato 5 y NA
+tabla <- table(datos$ESTRATO, datos$`BENEFICIO OTORGADO`)
+tabla
