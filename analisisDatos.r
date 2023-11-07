@@ -73,3 +73,13 @@ ggplot(datos, aes(x = `BENEFICIO OTORGADO`, fill = ESTRATO)) +
 #Tabla para ver mas detalladamente los estrato 4, estrato 5 y NA
 tabla <- table(datos$ESTRATO, datos$`BENEFICIO OTORGADO`)
 tabla
+
+
+#Poner frecuencia en porcentajes
+
+# Tipo de beneficio por estrato (correcta)
+ggplot(datos, aes(x = ESTRATO, fill = `BENEFICIO OTORGADO`)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Estrato", y = "", fill = "Tipo de beneficio") +
+  ggtitle("Tipo de Beneficio por Estrato") +
+  theme_minimal()
