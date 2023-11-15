@@ -4,7 +4,7 @@ datos <- read_csv("https://raw.githubusercontent.com/MelanyMFM/PosterManejodeDat
                   col_types = cols(`FECHA DE NACIMIENTO` = col_datetime(format = "%m/%d/%Y %H:%M:%S %p")))
 datos |> dim() # Dimensiones base de datos
 
-datos
+View(datos)
 
 summary(datos)
 
@@ -83,3 +83,33 @@ ggplot(datos, aes(x = ESTRATO, fill = `BENEFICIO OTORGADO`)) +
   labs(x = "Estrato", y = "", fill = "Tipo de beneficio") +
   ggtitle("Tipo de Beneficio por Estrato") +
   theme_minimal()
+
+
+# Tipo de beneficio por estrato (columnas apiladas al 100%)
+
+datos_filtrados <- datos %>%
+  filter(!(ESTRATO %in% c("ESTRATO 4", "ESTRATO 5", "ND")))
+
+colores_personalizados <- c("#DADAEB", "#9E9AC8", "#6A51A3")
+
+# Crear el gráfico con los datos filtrados y la paleta de colores personalizada
+ggplot(datos_filtrados, aes(x = ESTRATO, fill = `BENEFICIO OTORGADO`)) +
+  geom_bar(position = "fill") +
+  labs(x = "Estrato", y = "Porcentaje", fill = "Tipo de beneficio") +
+  ggtitle("Tipo de Beneficio por Estrato") +
+  theme_minimal() +
+  scale_y_continuous(labels = scales::percent_format(scale = 100)) +
+  scale_fill_manual(values = colores_personalizados)
+
+
+
+
+
+
+
+
+
+
+
+
+
