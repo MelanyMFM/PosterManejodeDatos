@@ -1,7 +1,7 @@
 # Lectura de datos
 library(readr)
 datos <- read_csv("https://raw.githubusercontent.com/MelanyMFM/PosterManejodeDatos/main/Beneficiaros_de_becas_y_creditos_de_programas_de_acceso_a_la_educaci_n_super.csv", 
-                  col_types = cols(`FECHA DE NACIMIENTO` = col_datetime(format = "%m/%d/%Y %H:%M:%S %p")))
+                  col_types = cols(CONVOCATORIA = col_date(format = "%Y"),`FECHA DE NACIMIENTO` = col_datetime(format = "%m/%d/%Y %H:%M:%S %p")))
 datos |> dim() # Dimensiones base de datos
 
 View(datos)
@@ -90,7 +90,7 @@ ggplot(datos, aes(x = ESTRATO, fill = `BENEFICIO OTORGADO`)) +
 datos_filtrados <- datos %>%
   filter(!(ESTRATO %in% c("ESTRATO 4", "ESTRATO 5", "ND")))
 
-colores_personalizados <- c("#DADAEB", "#9E9AC8", "#6A51A3")
+colores_personalizados <- c("#66c2a5","#9aaf8d", "#cf9c76", "#DADAEB", "#9E9AC8", "#6A51A3")
 
 # Crear el gráfico con los datos filtrados y la paleta de colores personalizada
 ggplot(datos_filtrados, aes(x = ESTRATO, fill = `BENEFICIO OTORGADO`)) +
@@ -99,17 +99,66 @@ ggplot(datos_filtrados, aes(x = ESTRATO, fill = `BENEFICIO OTORGADO`)) +
   ggtitle("Tipo de Beneficio por Estrato") +
   theme_minimal() +
   scale_y_continuous(labels = scales::percent_format(scale = 100)) +
-  scale_fill_manual(values = colores_personalizados)
+  scale_fill_brewer()
+
+
+# Tabla ¿?
+tabla_frecuencias <- table(datos$GÉNERO, datos$`BENEFICIO OTORGADO`)
+df_tabla <- as.data.frame.matrix(tabla_frecuencias)
+print(df_tabla)
+
+# Ejemplo de creación de tabla de frecuencias cruzadas relativas
+tabla_frecuencias <- prop.table(table(datos$GÉNERO, datos$`BENEFICIO OTORGADO`), margin = 1)
+df_tabla <- as.data.frame.matrix(tabla_frecuencias)
+print(df_tabla)
+
+
+# Crear el gráfico con los datos filtrados y la paleta de colores personalizada
+ggplot(datos, aes(x = CONVOCATORIA, fill = `BENEFICIO OTORGADO`)) +
+  geom_bar(position = "fill") +
+  labs(x = "Estrato", y = "Porcentaje", fill = "Tipo de beneficio") +
+  ggtitle("Tipo de Beneficio por Estrato") +
+  theme_minimal() +
+  scale_y_continuous(labels = scales::percent_format(scale = 100)) +
+  scale_fill_brewer()
 
 
 
+ggplot(datos, aes(x =`VICTIMA DEL CONFLICTO ARMADO`, fill = `BENEFICIO OTORGADO`)) +
+  geom_bar(position = "fill") +
+  labs(x = "Estrato", y = "Porcentaje", fill = "Tipo de beneficio") +
+  ggtitle("Tipo de Beneficio por Estrato") +
+  theme_minimal() +
+  scale_y_continuous(labels = scales::percent_format(scale = 100)) +
+  scale_fill_brewer()
 
 
 
-
-
-
-
-
-
-
+ggplot(datos_filtrados, aes(x = `TIPO DE FORMACIÓN`, fill = `BENEFICIO OTORGADO`)) +
+  geom_bar(position = "fill") +
+  labs(x = "Tipo de Formación", y = "", fill = "Beneficio Otorgado") +
+  ggtitle("Tipo de Beneficio por Formación") +
+  theme_minimal() +
+  scale_y_continuous(labels = scales::percent_format(scale = 100)) +
+  scale_fill_brewer()
+# Tabla ¿?
+tabla_frecuencias <- table(datos$`TIPO DE FORMACIÓN`, datos$`BENEFICIO OTORGADO`)
+df_tabla <- as.data.frame.matrix(tabla_frecuencias)
+print(df_tabla)
+tabla_frecuencias <- prop.table(table(datos$`TIPO DE FORMACIÓN`, datos$`BENEFICIO OTORGADO`), margin = 1)
+df_tabla <- as.data.frame.matrix(tabla_frecuencias)
+print(df_tabla)
+tecnoprof = datos[datos$`TIPO DE FORMACIÓN` == "TECNICA PROFESIONAL", ]
+universitarios = datos[datos$`TIPO DE FORMACIÓN` == "UNIVERSITARIA",]
+nprmalista = datos[datos$`TIPO DE FORMACIÓN` == "NORMALISTA",]
+ggplot(nprmalista, aes(x = "", fill = GÉNERO)) +
+  geom_bar(width = 1) +
+  coord_polar(theta = "y") +
+  labs(title = "Distribución de Estrato") +
+  theme_void()
+ggplot(universitarios, aes(x = "", fill = ESTRATO)) +
+  geom_bar(width = 1) +
+  coord_polar(theta = "y") +
+  labs(title = "Estrato en Universitarios") +
+  scale_fill_brewer()
+count(universitarios[universitarios$ESTRATO == "ESTRATO 1", ])
