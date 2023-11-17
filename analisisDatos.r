@@ -151,6 +151,7 @@ print(df_tabla)
 tecnoprof = datos[datos$`TIPO DE FORMACIÓN` == "TECNICA PROFESIONAL", ]
 universitarios = datos[datos$`TIPO DE FORMACIÓN` == "UNIVERSITARIA",]
 nprmalista = datos[datos$`TIPO DE FORMACIÓN` == "NORMALISTA",]
+posgrado = datos[datos$`TIPO DE FORMACIÓN` == "POSGRADO",]
 ggplot(nprmalista, aes(x = "", fill = GÉNERO)) +
   geom_bar(width = 1) +
   coord_polar(theta = "y") +
@@ -175,8 +176,8 @@ ggplot(nprmalista, aes(x = "", fill = UNIVERSIDAD)) +
 # Crear el gráfico con los datos filtrados y la paleta de colores personalizada
 ggplot(datos, aes(x = `SUBREGIÓN DE RESIDENCIA`, fill = `BENEFICIO OTORGADO`)) +
   geom_bar(position = "fill") +
-  labs(x = "Estrato", y = "Porcentaje", fill = "Tipo de beneficio") +
-  ggtitle("Tipo de Beneficio por Estrato") +
+  labs(x = "Subregión", y = "", fill = "Tipo de beneficio") +
+  ggtitle("Tipo de Beneficio por Subregión de Residencia") +
   theme_minimal() +
   scale_y_continuous(labels = scales::percent_format(scale = 100)) +
   scale_fill_brewer()
@@ -184,13 +185,48 @@ aburra <- datos[datos$`SUBREGIÓN DE RESIDENCIA` == "VALLE DE ABURRA",]
 ggplot(aburra, aes(x = "", fill = ESTRATO)) +
   geom_bar(width = 1) +
   coord_polar(theta = "y") +
-  labs(title = "Distribución de Genero") +
+  labs(title = "Distribución de Género") +
   scale_fill_brewer()
-ggplot(datos, aes(x = "", fill =`TIPO DE FORMACIÓN`)) +
+
+tabla_frecuencias <- prop.table(table(aburra$ESTRATO, aburra$`BENEFICIO OTORGADO`), margin = 1)
+df_tabla <- as.data.frame.matrix(tabla_frecuencias)
+print(df_tabla)
+
+table((aburra$`TIPO DE FORMACIÓN`))
+ggplot(aburra, aes(x = "", fill = `TIPO DE FORMACIÓN`)) +
   geom_bar(width = 1) +
   coord_polar(theta = "y") +
-  labs(title = "Distribución de Genero") +
+  labs(title = "Distribución de Género") +
+  scale_fill_brewer()
+
+
+table((aburra$`TIPO DE FORMACIÓN`))
+ggplot(aburra, aes(x = "", fill = UNIVERSIDAD)) +
+  geom_bar(width = 1) +
+  coord_polar(theta = "y") +
+  labs(title = "Distribución de Género") +
   scale_fill_brewer()
 
 
 
+
+ggplot(posgrado, aes(x = "", fill =`GRUPO ETNICO` )) +
+  geom_bar(width = 1) +
+  coord_polar(theta = "y") +
+  labs(title = "Estrato en Posgrados") +
+  scale_fill_brewer()
+
+table(posgrado$ESTRATO)
+
+View(posgrado)
+
+table(posgrado$UNIVERSIDAD)
+table(posgrado$`PROGRAMA CURSADO`)
+
+
+tabla_frecuencias <- prop.table(table(datos$ESTRATO, datos$`BENEFICIO OTORGADO`), margin = 1)
+df_tabla <- as.data.frame.matrix(tabla_frecuencias)
+print(df_tabla)
+
+
+      
