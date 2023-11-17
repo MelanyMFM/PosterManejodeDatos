@@ -154,11 +154,43 @@ nprmalista = datos[datos$`TIPO DE FORMACIÓN` == "NORMALISTA",]
 ggplot(nprmalista, aes(x = "", fill = GÉNERO)) +
   geom_bar(width = 1) +
   coord_polar(theta = "y") +
-  labs(title = "Distribución de Estrato") +
-  theme_void()
-ggplot(universitarios, aes(x = "", fill = ESTRATO)) +
+  labs(title = "Distribución de Genero") +
+  scale_fill_brewer()
+ggplot(nprmalista, aes(x = "", fill = ESTRATO)) +
   geom_bar(width = 1) +
   coord_polar(theta = "y") +
   labs(title = "Estrato en Universitarios") +
   scale_fill_brewer()
-count(universitarios[universitarios$ESTRATO == "ESTRATO 1", ])
+count(nprmalista[nprmalista$GÉNERO == "FEMENINO", ])
+
+
+ggplot(nprmalista, aes(x = "", fill = UNIVERSIDAD)) +
+  geom_bar(width = 1) +
+  coord_polar(theta = "y") +
+  labs(title = "Distribución de Genero") +
+  scale_fill_brewer()
+
+
+
+# Crear el gráfico con los datos filtrados y la paleta de colores personalizada
+ggplot(datos, aes(x = `SUBREGIÓN DE RESIDENCIA`, fill = `BENEFICIO OTORGADO`)) +
+  geom_bar(position = "fill") +
+  labs(x = "Estrato", y = "Porcentaje", fill = "Tipo de beneficio") +
+  ggtitle("Tipo de Beneficio por Estrato") +
+  theme_minimal() +
+  scale_y_continuous(labels = scales::percent_format(scale = 100)) +
+  scale_fill_brewer()
+aburra <- datos[datos$`SUBREGIÓN DE RESIDENCIA` == "VALLE DE ABURRA",]
+ggplot(aburra, aes(x = "", fill = ESTRATO)) +
+  geom_bar(width = 1) +
+  coord_polar(theta = "y") +
+  labs(title = "Distribución de Genero") +
+  scale_fill_brewer()
+ggplot(datos, aes(x = "", fill =`TIPO DE FORMACIÓN`)) +
+  geom_bar(width = 1) +
+  coord_polar(theta = "y") +
+  labs(title = "Distribución de Genero") +
+  scale_fill_brewer()
+
+
+
